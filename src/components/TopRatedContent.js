@@ -1,107 +1,132 @@
 // Init
 import React from "react";
-import Course1 from "../assets/img/course1.png";
-import Course2 from "../assets/img/course2.png";
-import Course3 from "../assets/img/course3.png";
-import Course4 from "../assets/img/course4.png";
+import Game1 from "../assets/img/game1.png";
+import Game2 from "../assets/img/game2.png";
+import Game3 from "../assets/img/game3.png";
+import Game4 from "../assets/img/game4.png";
+import Game5 from "../assets/img/game5.png";
 import StarIcon from "@material-ui/icons/Star";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-export default function LatestCourses() {
+export default function TopRatedContent() {
   var items = [
     {
-      title: "CS-GO Ep 2 Complete Course",
-      img: Course1,
-      name: "James Wiik",
+      title: "fighting game player of Tekken",
+      img: Game1,
+      name: "Arslan Ash",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "1",
     },
     {
-      title: "PUBG GamePlay Course",
-      img: Course2,
-      name: "Ifaf ghori",
+      title: "Undefeated PUBG player",
+      img: Game2,
+      name: "Jennifer Flagg",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "2",
     },
     {
-      title: "Taken 5 Fight Course",
-      img: Course3,
-      name: "Arslan Ash",
+      title: "Mincraft Expert",
+      img: Game3,
+      name: "Pewdiepie",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "3",
     },
     {
-      title: "Minicraft Full Course",
-      img: Course4,
-      name: "James Wiik",
+      title: "Pro player of CS:GO",
+      img: Game4,
+      name: "Dupreeh",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "4",
     },
     {
-      title: "5Minicraft Full Course",
-      img: Course4,
-      name: "5James Wiik",
+      title: "GTA 5 Expert",
+      img: Game5,
+      name: "Emma Johns",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "5",
     },
     {
       title: "6Minicraft Full Course",
-      img: Course3,
+      img: Game3,
       name: "6James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "6",
     },
     {
       title: "7Minicraft Full Course",
-      img: Course2,
+      img: Game2,
       name: "7James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "7",
     },
     {
       title: "8Minicraft Full Course",
-      img: Course1,
+      img: Game1,
       name: "8James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "8",
     },
     {
       title: "9Minicraft Full Course",
-      img: Course1,
+      img: Game4,
       name: "9James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "3",
     },
     {
       title: "10Minicraft Full Course",
-      img: Course2,
+      img: Game5,
       name: "10James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "3",
     },
     {
       title: "11Minicraft Full Course",
-      img: Course3,
+      img: Game3,
       name: "11James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "3",
     },
     {
       title: "12Minicraft Full Course",
-      img: Course4,
+      img: Game2,
       name: "12James Wiik",
+      level: "Pro",
+      students: "500000+ Students",
       rating: "rating",
       price: "19.99",
       test: "3",
@@ -111,12 +136,12 @@ export default function LatestCourses() {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 4,
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 4,
-      slidesToSlide: 4,
+      items: 5,
+      slidesToSlide: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -129,20 +154,20 @@ export default function LatestCourses() {
   };
 
   return (
-    <div className="latestCoursescontainer">
-      <div className="latestcourseHeadingDiv">
-        <p className="latestcourseheading">Latest Course</p>
-        <p className="latestcourseheading">View All</p>
+    <div className="topRatedContentcontainer">
+      <div className="topRatedContentHeadingDiv">
+        <p className="topRatedheading">Top Rated Content Creators</p>
+        <p className="topRatedheading">View All</p>
       </div>
-      <div className="carousalOuterDiv">
+      <div className="TopRatedcarousalOuterDiv">
         <Carousel
           responsive={responsive}
           infinite={true}
           className="latestcourseCarousel"
         >
           {items.map((item, i) => (
-            <div className="cardGrid">
-              <img src={item.img} className="courseimg" />
+            <div className="topRatedcardGrid">
+              <img src={item.img} className="topRatedcourseimg" />
               <h5 className="latestcourseh5">{item.title}</h5>
               <p className="latestcoursep1">{item.name}</p>
               <p className="latestcoursep1">

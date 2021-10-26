@@ -1,22 +1,22 @@
-.latestCoursescontainer {
+.topRatedContentcontainer {
   margin-top: 5px;
   position: unset !important;
   color: white;
   margin: auto;
   text-align: left;
 }
-.latestcourseHeadingDiv {
+.topRatedContentHeadingDiv {
   display: flex;
   justify-content: space-between;
   width: 93%;
   margin: auto;
 }
-.latestcourseheading {
+.topRatedheading {
   padding: 20px 0px 25px 0px;
   font-weight: bolder;
   font-size: 17px;
 }
-.cardGrid {
+.topRatedcardGrid {
   background: linear-gradient(
     90.12deg,
     #202342 22.77%,
@@ -26,9 +26,10 @@
   width: 95% !important;
   margin: auto !important;
 }
-.courseimg {
+.topRatedcourseimg {
   width: 100%;
-  padding: 20px 20px 10px 20px;
+  height: 225px;
+  /* padding: 0px 0px 10px 0px; */
 }
 .latestcourseh5 {
   padding-left: 20px;
@@ -43,27 +44,7 @@
   font-size: 12px;
   opacity: 0.8;
 }
-.carousalOuterDiv {
+.TopRatedcarousalOuterDiv {
   width: 95%;
   margin: auto;
-}
-/* right arrow */
-.react-multiple-carousel__arrow--right {
-  background-color: transparent !important;
-  right: 4px !important;
-}
-.react-multiple-carousel__arrow::before {
-  font-size: 30px !important;
-}
-.react-multiple-carousel__arrow:hover {
-  color: green !important;
-}
-/* left arrow */
-.react-multiple-carousel__arrow--left {
-  left: 2px !important;
-  background-color: transparent !important;
-}
-.react-multi-carousel-list {
-  position: unset !important;
-  overflow-x: hidden !important;
 }
