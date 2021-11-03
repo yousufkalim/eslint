@@ -1,7 +1,7 @@
 // Init
 import React from "react";
 import Header from "../components/Header";
-import BlogBody from "../components/blog/BlogBody";
+import ArticleBody from "../components/article/ArticleBody";
 
 export default function Construction() {
   return (
@@ -13,7 +13,7 @@ export default function Construction() {
       }}
     >
       <Header />
-      <BlogBody />
+      <ArticleBody />
     </div>
   );
 }
