@@ -1,9 +1,9 @@
 // Init
 import React from "react";
 import Header from "../components/Header";
-import BlogBody from "../components/blog/BlogBody";
+import AboutLandingPage from "../components/about/AboutLandingPage";
 
-export default function Blog() {
+export default function About() {
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ export default function Blog() {
       }}
     >
       <Header />
-      <BlogBody />
+      <AboutLandingPage />
     </div>
   );
 }
