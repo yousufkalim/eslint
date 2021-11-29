@@ -1,5 +1,5 @@
+/* 
 
-/* UserLandingPage navbar css starts here */
 .logo-text{
   color: #e7411b;
   margin-right: 9px;
@@ -22,7 +22,7 @@
   background-color: #e7411b;;
 }
 
-/* User landing page header css starts here */
+
 .user-landingpage-container{
     margin: 5px 0px 40px 0px;
     position: relative;
@@ -111,7 +111,7 @@ input[type="search"] {
   padding: 25px 100px;
   color: #fff;
 }
-/* UserLandingPage Advantages section css starts here */
+
 
 .box-user{
   width: 80%;
@@ -164,7 +164,7 @@ input[type="search"] {
   border-radius: 10px;
   padding: 8px 22px;
 }
-/* UserLandingPage community section starts here */
+
 .community{
   margin: 0 auto !important;
   width: 80% !important;
@@ -200,7 +200,7 @@ input[type="search"] {
   margin: 0 auto !important;
 }
 
-/* Trending section starts here */
+
 .trending-heading-container{
   font-size: .85em;
   letter-spacing: .1em;
@@ -214,10 +214,42 @@ input[type="search"] {
   border-bottom: 1px solid #333333;
 }
 
-.trending-block{
+.table-block{
   margin: 50px auto !important;
   width: 80% !important;
   color: #fff;
+}
+.trending-table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+ 
+}
+.trending-table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+.trending-table td{
+  padding: .625em;
+  text-align: center;
+  background-color: rgb(14, 15, 30);
+}
+.trending-table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  background-color: #202342;
+  padding: 14px;
+  border: 2.5px solid #202342;
+}
+.table-body{
+  border-right: 0.5px solid #7788;
+    border-left: 0.5px solid #7788;
+    border-bottom: 0.5px solid #7788;
+}
+.table-img{
+  margin-right: 9px;
 }
 .table-img-text{
   display: flex;
@@ -228,7 +260,7 @@ input[type="search"] {
 .trending-text-width{
   width: 120px;
   margin: 0 10px;
-  font-size: .75em;
+font-size: .75em;
 }
 .top-games-header{
   width: 60%;
@@ -239,7 +271,6 @@ input[type="search"] {
 .nft-games-header{
   width: 78%;
 }
-/* userlandingpage blog */
 .UserLandingPageBlogContainer{
   width: 80%;
   margin: 0 auto;
@@ -257,7 +288,7 @@ color: #fff;
   font-size: 15px !important;
   font-weight: 100;
 }
-/* Media queries */
+
 @media all and (max-width:800px) {
   .flex-form {
     width: 100%;
@@ -334,7 +365,19 @@ color: #fff;
 }
 .user-landing-page-right-img {
   width: 50%;
-}   
+}
+.trending-table caption {
+  font-size: 1.3em;
+}
+
+.trending-table th {
+  font-size: 0.5em;
+  white-space: nowrap;
+    }
+    .table-img{
+      margin-bottom: 5px;
+    }
+   
 .btn-content-creator {
 padding: 8px;
 border-radius: 25px;
@@ -349,6 +392,7 @@ font-size: 9px;
   input[type="search"] {
     width: 50%;
   }
+  
   .userlandingpageheaderspacing{
     padding-top: 20px !important;
   }
@@ -357,4 +401,4 @@ font-size: 9px;
     width: 70px;
     font-size: 8px;
 }
-}
+} */
