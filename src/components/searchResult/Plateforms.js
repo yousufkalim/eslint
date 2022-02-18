@@ -1,13 +1,17 @@
 import React from "react";
 
-const Categories = ({ categories, activeButton, trigerOnClickEmpSideBtn }) => {
+const Plateforms = ({
+  PlateformsAry,
+  PlateformsBtn,
+  trigerOnClickEmpSideBtn3,
+}) => {
   return (
     <>
-      {categories.map((item) => {
-        const className = activeButton === item.name ? "active" : "";
+      {PlateformsAry.map((item) => {
+        const className = PlateformsBtn === item.name ? "active" : "";
         return (
           <div
-            onClick={trigerOnClickEmpSideBtn}
+            onClick={trigerOnClickEmpSideBtn3}
             key={item.name}
             className={`categories-text ${className}`}
             sx={{ display: "flex", flexDirection: "column" }}
@@ -20,4 +24,4 @@ const Categories = ({ categories, activeButton, trigerOnClickEmpSideBtn }) => {
   );
 };
 
-export default Categories;
+export default Plateforms;

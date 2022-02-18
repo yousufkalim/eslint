@@ -1,13 +1,13 @@
 import React from "react";
 
-const Categories = ({ categories, activeButton, trigerOnClickEmpSideBtn }) => {
+const GameType = ({ GameTypes, gameBtn, trigerOnClickEmpSideBtn2 }) => {
   return (
     <>
-      {categories.map((item) => {
-        const className = activeButton === item.name ? "active" : "";
+      {GameTypes.map((item) => {
+        const className = gameBtn === item.name ? "active" : "";
         return (
           <div
-            onClick={trigerOnClickEmpSideBtn}
+            onClick={trigerOnClickEmpSideBtn2}
             key={item.name}
             className={`categories-text ${className}`}
             sx={{ display: "flex", flexDirection: "column" }}
@@ -20,4 +20,4 @@ const Categories = ({ categories, activeButton, trigerOnClickEmpSideBtn }) => {
   );
 };
 
-export default Categories;
+export default GameType;
