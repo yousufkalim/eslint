@@ -1,20 +1,19 @@
-// Init
 import React from "react";
 import AboutLandingPageImg from "../../assets/img/aboutlandingpage02.png";
-import WhoWeAre from "./WhoWeAre";
 
-export default function About() {
+const Legal = () => {
   return (
-    <>
+    <div>
       <div className="aboutcontainer">
         <div className="aboutimgcontainer">
           <img src={AboutLandingPageImg} className="aboutLeftimg" />
         </div>
         <div className="AbouttextonImg">
-          <h1 className="AbouttextimgH1">Qui sommes-nous ?</h1>
+          <h1 className="AbouttextimgH1">Mentions legales</h1>
         </div>
       </div>
-      <WhoWeAre />
-    </>
+    </div>
   );
-}
+};
+
+export default Legal;
