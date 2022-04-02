@@ -2,40 +2,33 @@ import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import "../../css/form/UploadSuccessfulPopup.css";
 import UploadSuccessLog from "../../assets/icons/UploadSuccessLog.svg";
-import DeletedEpisodeCourse from "./DeletedEpisodeCourse";
+import ClearIcon from "@mui/icons-material/Clear";
 
-const DeleteEpisodePUBG = ({ open, setOpen }) => {
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-
-  const handleClick = () => {
-    setShowDeletePopup(true);
-    setOpen(false);
-  };
-
+const CongratulationPopup1 = ({ open, setOpen, closeModal }) => {
   const handleClose = () => {
     setOpen(false);
+    closeModal();
   };
   return (
     <div>
-      <DeletedEpisodeCourse
-        open={showDeletePopup}
-        setOpen={setShowDeletePopup}
-      />
       <Dialog
         open={open}
-        setOpe={setOpen}
+        setOpen={setOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <div className="uploadSuccessDiv">
+          <ClearIcon className="subsclearIcon" onClick={handleClose} />
           <div className="uploadSuccess-centerDiv">
             <img src={UploadSuccessLog} alt="" className="uloadSuccessIMG" />
             <p className="uploadSuccessP">
-              Episode PUBG GamePlay Course 1/2 deleted
+              Félicitations !
+              <br />
+              Vous êtes inscrit avec succès !
             </p>
-            <button className="uploadSuccessBTN" onClick={handleClick}>
-              Confirm
+            <button className="uploadSuccessBTN" onClick={handleClose}>
+              OK
             </button>
           </div>
         </div>
@@ -44,4 +37,4 @@ const DeleteEpisodePUBG = ({ open, setOpen }) => {
   );
 };
 
-export default DeleteEpisodePUBG;
+export default CongratulationPopup1;
