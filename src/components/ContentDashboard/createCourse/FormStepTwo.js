@@ -20,7 +20,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 //   measurementId: process.env.FIREBASE_APP_MEASURMENT_ID,
 // };
 const firebaseConfig = {
-  apiKey: "AIzaSyD2gQzL7tY9g2s7v_j41a_r6iSksxs8Hdc",
+  apiKey: "AIzaSyD2gQzL7tY9g2s7v_j41a_r6iSksxs8Hdc", 
   authDomain: "video-storage-3769b.firebaseapp.com",
   projectId: "video-storage-3769b",
   storageBucket: "video-storage-3769b.appspot.com",
