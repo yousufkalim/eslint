@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: 16
       - run: npm i # or yarn install
+      - run: npm i eslint-config-airbnb
       - uses: sibiraj-s/action-eslint@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
