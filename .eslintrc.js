@@ -8,5 +8,5 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  rules: {},
+  rules: { "no-duplicate-imports": "error", "no-self-compare": "error", eqeqeq: "error" },
 };
