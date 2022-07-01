@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  eslint_action:
+  eslint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,7 +16,7 @@ jobs:
           node-version: 16
       - run: npm i # or yarn install
       - run: npm i eslint-config-airbnb
-      - uses: yousufkalim/eslint-action@v1.0.2
+      - uses: yousufkalim/eslint-action@v1.0.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
           eslint-args: "--ignore-path=.gitignore"
