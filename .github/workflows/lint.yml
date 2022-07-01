@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  eslint:
+  eslint_action:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
