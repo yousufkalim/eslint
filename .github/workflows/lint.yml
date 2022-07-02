@@ -14,9 +14,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: yousufkalim/eslint-action@v1.1.5
+      - uses: yousufkalim/eslint-action@latest
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
-          eslint-args: "--ignore-path=.gitignore"
-          extensions: "js,jsx,ts,tsx"
+          eslint-args: '--ignore-path=.gitignore'
+          eslintrc: false # Set this to true if you want to use your own .eslintrc rules
+          extensions: 'js,jsx,ts,tsx'
           annotations: true
