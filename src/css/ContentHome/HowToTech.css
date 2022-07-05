@@ -75,8 +75,6 @@
 .howTeachBtn {
   margin: auto;
   text-align: center;
-
-  padding-bottom: 12px;
 }
 .dot {
   height: 25px;
@@ -87,7 +85,7 @@
   text-align: left;
 }
 /* for big screens */
-@media only screen and (min-width: 1025px) and (max-width: 1400px) {
+/* @media only screen and (min-width: 1025px) and (max-width: 1400px) {
   .Stepperline2 {
     height: 27px;
   }
@@ -161,15 +159,13 @@
     margin-left: 0px;
   }
   .Getstarted22 {
-    width: 280px;
-    /* margin-top: 30px; */
-    margin-bottom: 20px;
+    display: none;
   }
   .StepMain2 {
     position: inherit;
-    width: 90%;
     padding: 0px 0px 0 0px;
     margin: auto;
+    margin-top: 7%;
   }
   .Getstarted32 {
     width: 100%;

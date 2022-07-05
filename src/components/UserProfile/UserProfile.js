@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "../../components/UserProfile/UserProfile.css";
 import UserHomeProfleImg from "../../assets/img/UserHomeProfleImg.svg";
-import ProfileDp from "../../assets/img/ProfileDp.jpg";
+import ProfileDp from "../../assets/img/profileavatar.png";
+import LoadingAvatar from "../../assets/img/loadingavatar.jpeg";
 import editIcon from "../../assets/editicon2.svg";
 import PropfileInformation from "../PopupForms/PropfileInformation";
 import RegisterSuccessfully from "../PopupForms/RegisterSuccessfully";
@@ -9,8 +10,22 @@ import BecomeCreatorpopup from "../PopupForms/BecomeCreatorpopup";
 import { Store, UpdateStore } from "../../StoreContext";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import Slider from "@material-ui/core/Slider";
+import Cropper from "react-easy-crop";
 import api from "../../api";
+import { getCroppedImg } from "./canvasUtils";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../utils/firebase";
+
 const UserProfile = (props) => {
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [ProfileLoading, setProfileLoading] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [imgfile, setImgfile] = useState(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [imageSrc, setImageSrc] = React.useState(null);
+
   const { user, creator } = props;
   const history = useHistory();
   const [openProfile, setOpenProfile] = useState(false);
@@ -20,7 +35,7 @@ const UserProfile = (props) => {
   const [cover_photo, setCoverImageURL] = useState("");
   const [profile_photo, setProfileimg] = useState("");
   const updateStore = UpdateStore();
-
+  let file;
   const handleClickOpen = () => {
     if (user?.role == "Creator") {
       setOpen(true);
@@ -29,23 +44,46 @@ const UserProfile = (props) => {
     }
   };
   const handleImageSelect = async (e) => {
-    const formdata = new FormData();
-    formdata.append(`files`, e.target.files[0]);
-    let res = await api("post", "/uploadImage", formdata);
-    setCoverImageURL(res.data.file[0].location);
-  };
-  const handleIProfilemageSelect = async (e) => {
-    const formdata = new FormData();
-    formdata.append(`files`, e.target.files[0]);
-    let res = await api("post", "/uploadImage", formdata);
-    if (res) {
-      saveProfilePhoto(res.data.file[0].location);
-      setProfileimg(res.data.file[0].location);
+    if (e.target.files && e.target.files.length > 0) {
+      file = e.target.files[0];
+      setImgfile(file);
+      let imageDataUrl = await readFile(file);
+      setImageSrc(imageDataUrl);
     }
   };
-  const saveCoverPhoto = async () => {
+  const handleIProfilemageSelect = async (e) => {
+    setProfileLoading(true);
+    let myFile = e.target.files[0];
+
+    // upload on firebase
+    if (!myFile) return;
+    const storageRef = ref(storage, `files/${myFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, myFile);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProfileimg(downloadURL);
+          saveProfilePhoto(downloadURL);
+          setProfileLoading(false);
+        });
+      }
+    );
+    // end upload on firebase
+  };
+  const saveCoverPhoto = async (downloadURL) => {
     if (user?.role == "Creator") {
-      let res = await api("post", `/creators/${user?._id}`, { cover_photo });
+      let res = await api("post", `/creators/${user?._id}`, {
+        cover_photo: downloadURL
+      });
       if (res) {
         setCoverImageURL("");
         updateStore({
@@ -56,7 +94,7 @@ const UserProfile = (props) => {
       }
     } else {
       let res = await api("put", `/users/addProfileInfo/${user?._id}`, {
-        cover_photo
+        cover_photo: downloadURL
       });
       if (res) {
         setCoverImageURL("");
@@ -74,7 +112,6 @@ const UserProfile = (props) => {
           user: res?.data?.newUsers,
           creator: res?.data?.creator
         });
-        console.log("res.data for creator", res.data);
       }
     } else {
       let res = await api("put", `/users/addProfileInfo/${user?._id}`, {
@@ -83,12 +120,60 @@ const UserProfile = (props) => {
       if (res) {
         setProfileimg("");
         updateStore({ user: res.data });
-        console.log("res.data for user", res.data);
       }
     }
   };
-  console.log("user", user);
 
+  function readFile(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const showandSaveCroppedImage = useCallback(async () => {
+    try {
+      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
+
+      var myFile = new File([croppedImage], imgfile?.name, {
+        lastModified: new Date().getTime(),
+        type: imgfile?.type
+      });
+      // upload on firebase
+      if (!myFile) return;
+      const storageRef = ref(storage, `files/${myFile.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, myFile);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+        },
+        (error) => {
+          alert(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("downloadURL222", downloadURL);
+            saveCoverPhoto(downloadURL);
+            setCoverImageURL(downloadURL);
+          });
+        }
+      );
+      // end upload on firebase
+
+      setCroppedImage(croppedImage);
+      setCoverImageURL(URL.createObjectURL(croppedImage));
+      setImageSrc(null);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [imageSrc, croppedAreaPixels]);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
   return (
     <>
       <RegisterSuccessfully
@@ -107,36 +192,75 @@ const UserProfile = (props) => {
       <BecomeCreatorpopup open={open} setOpen={setOpen} user={user} />
       <div className="userProfileDiv">
         <div className="userProfile-centerDiv">
-          <div className="profile-image">
-            {/* {showImg ? null : (
+          {imageSrc ? (
+            <>
+              {" "}
+              <div className="cropperdiv">
+                <Cropper
+                  image={imageSrc}
+                  crop={crop}
+                  zoom={zoom}
+                  aspect={8 / 2}
+                  onCropChange={setCrop}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
+                />
+              </div>
+              <div className="imgzoomer">
+                <p
+
+                // classes={{ root: classes.sliderLabel }}
+                >
+                  Zoom
+                </p>
+                <Slider
+                  value={zoom}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  aria-labelledby="Zoom"
+                  className="zoomlider"
+                  onChange={(e, zoom) => setZoom(zoom)}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="profile-image">
+              {/* {showImg ? null : (
               <> */}
-            <img
-              src={
-                cover_photo
-                  ? cover_photo
-                  : user?.cover_photo
-                  ? user?.cover_photo
-                  : UserHomeProfleImg
-              }
-              alt=""
-              className="profileBackgroun-Image"
-            />
-            {/* </>
+              <img
+                src={
+                  cover_photo
+                    ? cover_photo
+                    : user?.cover_photo
+                    ? user?.cover_photo
+                    : UserHomeProfleImg
+                }
+                alt=""
+                className="profileBackgroun-Image"
+              />
+              {/* </>
             )} */}
-          </div>
+            </div>
+          )}
 
           <div className="Profile-DP">
-            <img
-              src={
-                profile_photo
-                  ? profile_photo
-                  : user?.profile_photo
-                  ? user?.profile_photo
-                  : ProfileDp
-              }
-              alt=""
-              className="DP-img"
-            />
+            {ProfileLoading ? (
+              <img src={LoadingAvatar} alt="loading" className="DP-img" />
+            ) : (
+              <img
+                src={
+                  profile_photo
+                    ? profile_photo
+                    : user?.profile_photo
+                    ? user?.profile_photo
+                    : ProfileDp
+                }
+                alt=""
+                className="DP-img"
+              />
+            )}
+
             <a to="">
               <label>
                 <input
@@ -186,10 +310,15 @@ const UserProfile = (props) => {
             </div> */}
 
             <div className="profileEditButton">
-              {cover_photo ? (
-                <div className="editProfiel-btn" onClick={saveCoverPhoto}>
-                  Save Cover Photo
-                </div>
+              {imageSrc ? (
+                <>
+                  <div
+                    className="editProfiel-btn"
+                    onClick={showandSaveCroppedImage}
+                  >
+                    Save Cover Photo
+                  </div>
+                </>
               ) : (
                 <a to="">
                   <label>

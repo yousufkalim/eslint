@@ -436,13 +436,20 @@ export default function PrimarySearchAppBar({
         user={user}
         setCongratulation={setCongratulation}
       />
+      <PropfileInformation
+        openProfile={openBecomeCreatorPopup}
+        setOpenProfile={setOpenBecomeCreatorPopup}
+        handleClose={handleClose}
+        user={user}
+        setCongratulation={setCongratulation}
+      />
       <LoginFormPopup
         open={openlogin}
         setOpen={setOpenLogin}
         signup={opensignup}
         setSignup={setOpenSignup}
       />
-      <BecomeCreatorpopup
+      {/* <BecomeCreatorpopup
         open={openBecomeCreatorPopup}
         setOpen={setOpenBecomeCreatorPopup}
         games={games}
@@ -451,7 +458,7 @@ export default function PrimarySearchAppBar({
         setOpen2={setOpen2}
         setOpen3={setOpen3}
         // setCongratulation={setCongratulation}
-      />
+      /> */}
       <DoYouWant
         open={open}
         setOpen={setOpen}
@@ -563,7 +570,7 @@ export default function PrimarySearchAppBar({
                     ? "Search for course"
                     : "Search for content creator"
                 }
-                inputProps={{ "aria-label": "search" }}
+                inputProps={{ "aria-label": "search", className: "cc_field" }}
                 onChange={handleChangeInput}
                 // onSubmit={handleSearchButtonClick}
                 value={searchInput}
@@ -656,7 +663,7 @@ export default function PrimarySearchAppBar({
                           setOpen(true);
                         }}
                       >
-                        Become a Creater
+                        Become a Creator
                       </p>
 
                       <Link
@@ -704,7 +711,11 @@ export default function PrimarySearchAppBar({
                           disabled
                           displayEmpty
                         >
-                          <MenuItem value="" className="walletInputMenu">
+                          <MenuItem
+                            value=""
+                            className="walletInputMenu"
+                            id="w-item"
+                          >
                             Connect Wallet
                           </MenuItem>
                           <MenuItem value={10} className="walletInputMenu">

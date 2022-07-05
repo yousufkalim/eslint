@@ -1,5 +1,6 @@
 // Init
 import React, { useState, useEffect } from "react";
+import { useCallback } from "react";
 import Bodyimg from "../assets/img/Bodyimg.svg";
 import BodyBlurimg from "../assets/img/bodyblur.png";
 import TopCourses from "./TopCourses";
@@ -46,26 +47,18 @@ export default function Body({ setOpenSignup }) {
       pathname: "/searchResult",
       param: {
         name: "Top 10 Games",
-        value: "1"
-      }
+        value: "1",
+      },
     });
   };
   return (
     <>
-      <ContentRequest
-        openContentRequest={openContentRequest}
-        setOpenContentRequest={setOpenContentRequest}
-      />
+      <ContentRequest openContentRequest={openContentRequest} setOpenContentRequest={setOpenContentRequest} />
       {loading ? (
         <h1>Loading...</h1>
       ) : (
         <div className="Bodycontainer">
-          <img
-            src={Bodyimg}
-            alt="img"
-            className="bodyImage"
-            style={{ position: "relative" }}
-          />
+          <img src={Bodyimg} alt="img" className="bodyImage" style={{ position: "relative" }} />
 
           <div className="textonImg">
             <h1 className="textimgH1">
@@ -82,10 +75,7 @@ export default function Body({ setOpenSignup }) {
                 Explore Courses
               </button>
             ) : (
-              <button
-                className="textonImgbutton"
-                onClick={() => setOpenSignup(true)}
-              >
+              <button className="textonImgbutton" onClick={() => setOpenSignup(true)}>
                 Sign Up For Free
               </button>
             )}
@@ -93,11 +83,7 @@ export default function Body({ setOpenSignup }) {
           <TopCourses courses={courses} user={user} />
           <LatestCourses courses={courses} user={user} />
           <TopRatedContent topRatedContentCreator={topRatedContentCreator} />
-          <Request
-            openContentRequest={openContentRequest}
-            setOpenContentRequest={setOpenContentRequest}
-            user={user}
-          />
+          <Request openContentRequest={openContentRequest} setOpenContentRequest={setOpenContentRequest} user={user} />
           {/* x */}
           {/* <RankingList /> */}
           {/* <Blog /> */}

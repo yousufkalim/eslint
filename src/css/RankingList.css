@@ -11,6 +11,7 @@
   color: #fff !important;
   width: inherit !important;
   padding: 7px !important;
+  margin-top: 20px !important;
   opacity: 0.9;
 }
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
@@ -117,6 +118,7 @@
 }
 .css-qiwgdb {
   padding: 7.5px 14px !important;
+  margin-top: 20px !important;
 }
 .css-177ic5c {
   background-color: #0e0f1e !important;
@@ -131,7 +133,7 @@
     width: 150% !important;
   }
 } */
-@media only screen and (min-width: 1900px) {
+/* @media only screen and (min-width: 1900px) {
 }
 @media only screen and (min-width: 1600px) and (max-width: 1899px) {
   .rankingListheading {
@@ -202,4 +204,4 @@
   .css-ol92aw-MuiTableBody-root .MuiTableCell-root {
     text-align: center !important;
   }
-}
+} */

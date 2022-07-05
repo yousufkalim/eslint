@@ -125,7 +125,11 @@
   .Carousel-indicators-2 {
     margin-top: -60px !important;
   }
-  .getStartedContainer2 {
-    /* margin-top: 28%; */
+  .activeIndicator {
+    background: transparent;
+  }
+  .happy_col1p,
+  .happy_col1h2 {
+    text-align: center;
   }
 }

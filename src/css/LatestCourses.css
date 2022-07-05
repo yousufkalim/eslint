@@ -37,6 +37,7 @@
 .courseimg {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 10%;
   margin: auto;
   display: block;
@@ -58,7 +59,7 @@
 }
 .latestcoursep1 {
   padding: 8px 0px 5px 25px;
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.8;
 }
 .carousalOuterDiv {
@@ -96,10 +97,10 @@
 }
 /* -------------------------------- new card --------------------------------   */
 .latestCourseMain-Div {
-  width: 95%;
+  width: 92%;
   margin: auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between !important;
   padding: 15px 0;
   align-items: center;
   align-items: center;
@@ -112,6 +113,7 @@
   display: flex;
   padding: 8px 0px;
   align-items: center;
+  text-transform: capitalize;
 }
 .latestCourse-pHeading {
   font-size: 18px;
@@ -125,14 +127,14 @@
   text-align: center;
   font-size: 28px;
   font-family: "mulish";
-
+  text-transform: capitalize;
   font-weight: bolder;
 }
 .latestCourse-p {
   padding: 0 0 0 6px;
-  /* font-size: 18px; */
+  font-size: 18px;
   font-family: "mulish";
-  font-size: 13.61px !important;
+  text-transform: capitalize;
   font-weight: 800 !important;
 
   text-transform: capitalize;
@@ -154,14 +156,18 @@
   color: white;
   text-decoration: none;
   margin-top: 30px;
+  height: 247px !important;
 }
 .wishCarImgDiv {
   margin: 15px;
-  width: 290px;
+  width: 17%;
+  height: 87%;
 }
 .startcourseimg {
   border-radius: 12px;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .wishList-container {
   padding-left: 30px;
@@ -299,7 +305,12 @@
     text-align: left;
   }
   .latestcourseheading {
-    font-size: 17px;
+    font-size: 22px;
+  }
+  .latestcourseheadings {
+    padding: 39px 0px 3px 0px;
+    font-size: 15px;
+    font-weight: 400;
   }
   .requestBt2 {
     text-decoration: none;
@@ -314,5 +325,23 @@
   }
   .wishCarImgDiv {
     width: 93%;
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  .latestCourseMain-Div {
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 764px) {
+  .latestCourse-pHeading {
+    font-size: 16px;
+    font-weight: bolder;
+    padding-left: 5px;
+    font-family: "mulish";
+  }
+  .latestCourse-p {
+    font-size: 16px;
   }
 }

@@ -10,7 +10,8 @@
 }
 .css-i4bv87-MuiSvgIcon-root {
   height: 1.3rem !important;
-  color: #fff !important;
+  /* color: #5dcfa09c !important; */
+  color: #fff;
 }
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
   padding: 0px !important;
@@ -126,6 +127,7 @@ body {
   border: 2px solid #fff;
   color: #fff;
   font-size: 18px;
+  font-weight: 600;
   padding: 10px 10px;
   border-radius: 4px;
   font-family: "mulish";
@@ -344,8 +346,8 @@ body {
   margin-left: 4px;
 }
 /* -------------------------- PofileSetting -------------------------- */
-
-/* All Media Quaries */
+/* 
+/* All Media Quaries *
 @media only screen and (min-width: 1900px) {
   .Bio-container {
     width: 32%;
@@ -424,7 +426,7 @@ body {
     margin-top: 40px;
   }
   .profileSetting-centerDiv {
-    /* flex-direction: column; */
+    /* flex-direction: column; *
   }
   .profileSetting-Col {
     width: 30%;
@@ -509,9 +511,9 @@ body {
     width: 73%;
   }
   .DP-img {
-    /* width: 30%; */
+    /* width: 30%; *
     border: 6px solid #14162c;
-    /* height: 40%; */
+    /* height: 40%; *
     width: 94px;
     height: 102px;
   }
@@ -684,4 +686,4 @@ body {
     bottom: 14px;
     right: 10%;
   }
-}
+} */

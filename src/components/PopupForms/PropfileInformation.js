@@ -5,6 +5,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import api from "../../api";
+import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
+import { TextField, Paper } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import Course1 from "../../assets/img/course1.png";
 import { toast } from "react-toastify";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -13,12 +17,43 @@ export default function PropfileInformation({
   openProfile,
   setOpenProfile,
   user,
-  setCongratulation
+  setCongratulation,
 }) {
+  const useStyles = makeStyles({
+    customTextField: {
+      "& input": {
+        color: "white",
+        border: "none",
+      },
+      "&:hover": {
+        border: "red !important",
+      },
+      "& input::placeholder": {
+        color: "white",
+        "@media (max-width: 780px)": {
+          paddingLeft: "-2px",
+        },
+      },
+    },
+    option: {
+      background: "#242635 ",
+      color: "white",
+      "&:hover": {
+        backgroundColor: "#9198a5 !important",
+      },
+    },
+    noOptions: {
+      display: `${"inherit"}`,
+      color: "white",
+    },
+  });
+  const classes = useStyles();
   const updateStore = UpdateStore();
+  const { learner, creator } = Store();
   const [profile_photo, setImageURL] = useState(
     user?.profile_photo ? user.profile_photo : Course1
   );
+  const [values, setValues] = useState([]);
   const [favouritGame, setFavouritGame] = useState(
     user?.prefrence_games?.favourite_games
       ? user.prefrence_games.favourite_games
@@ -95,7 +130,7 @@ export default function PropfileInformation({
 
   const removeTags = (index) => {
     setFavouritGame([
-      ...favouritGame.filter((tag) => favouritGame.indexOf(tag) !== index)
+      ...favouritGame.filter((tag) => favouritGame.indexOf(tag) !== index),
     ]);
   };
 
@@ -147,7 +182,7 @@ export default function PropfileInformation({
       favourite_games: favouritGame,
       learningRethem: learningRethem,
       current_level: currentLevel,
-      target_level: target_level
+      target_level: target_level,
     };
     const formdata = {
       profile_photo,
@@ -155,7 +190,7 @@ export default function PropfileInformation({
       gameType,
       plateForm,
       gameMood,
-      LearningRhythm
+      LearningRhythm,
     };
     if (
       prefrence_games === "" ||
@@ -197,9 +232,9 @@ export default function PropfileInformation({
     { name: "RPG" },
     { name: "Simulation" },
     { name: "Turn By Turn Strategy" },
-    { name: "Sport" },
-    { name: "Tradung Card" },
-    { name: "Puzzle" }
+    { name: "Sports" },
+    { name: "Trading Card" },
+    { name: "Puzzle" },
   ];
   let gametypebtn2 = [
     { name: "Retro Consoles" },
@@ -207,11 +242,38 @@ export default function PropfileInformation({
     { name: "Xbox/360/One/X" },
     { name: "Mobile Games" },
     { name: "Portable Consoles" },
-    { name: "PC" }
+    { name: "PC" },
   ];
   // const handleClose = () => {
   //   setOpen(false);
   // };
+  const getAllGames = async (e) => {
+    // setformDataOne({
+    //   ...formDataOne,
+    //   [e.target.name]: e.target.value
+    // });
+
+    let res = await axios.get(
+      `https://api.rawg.io/api/games?key=${process.env.REACT_APP_GAME_API}=` +
+        e.target.value +
+        "&page=1&page_size=10",
+      {
+        withCredentials: false,
+      }
+    );
+
+    var gamesToSet = []; // //debugger;
+    for (var i = 0; i < res?.data?.results?.length; i++) {
+      gamesToSet.push(res?.data?.results[i].name);
+    }
+    if (gamesToSet.length === res?.data?.results.length) {
+      setValues(gamesToSet);
+    }
+  };
+  // Set selected game in  setAddressValue State
+  const setGamefiled = async (item, selectedItems, reason) => {
+    setFavouritGame(selectedItems);
+  };
 
   return (
     <div>
@@ -261,40 +323,57 @@ export default function PropfileInformation({
             <div>
               <p className="tags-input-FGames">Favorite Games</p>
             </div>
-            <div className="tags-input-ul">
-              <ul className="tags-input-ul2">
-                {favouritGame.map((tag, index) => (
-                  <li key={index} className="userProfileLi">
-                    <span
-                      style={{
-                        border: "1px solide grey",
-                        borderRadius: "2px",
-                        padding: "5px",
-                        paddingTop: "5px",
-                        paddingBottom: "5px"
-                      }}
-                      className="userProfileLiSpan"
-                    >
-                      {tag}
-                      <i
-                        style={{
-                          color: "white",
-                          height: "50%",
-                          marginLeft: "11px"
-                        }}
-                        class="fa-solid fa-xmark"
-                        onClick={() => removeTags(index)}
-                      ></i>
-                    </span>
-                  </li>
-                ))}
-                <input
-                  className="userProfile_inputTags"
-                  type="text"
-                  onKeyUp={(event) => addTags(event)}
-                  placeholder=""
-                />
-              </ul>
+            <div>
+              <Autocomplete
+                multiple
+                options={values}
+                classes={{
+                  option: classes.option,
+                }}
+                defaultValue={favouritGame}
+                filterSelectedOptions
+                popupIcon={null}
+                disableClearable
+                className="AutofiledgameExperties"
+                noOptionsText={
+                  <div
+                    style={{
+                      color: "white",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {" "}
+                    no option{" "}
+                  </div>
+                }
+                PaperComponent={({ children }) => (
+                  <Paper style={{ background: "#242635" }}>{children}</Paper>
+                )}
+                onChange={setGamefiled}
+                hiddenLabel="true"
+                style={{
+                  margin: "auto",
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    className="userProfile_inputTags"
+                    type="text"
+                    placeholder="Add here..."
+                    classes={{ root: classes.customTextField }}
+                    {...params}
+                    style={{ color: "white" }}
+                    // variant="outlined"
+                    onChange={getAllGames}
+                    sx={{
+                      outline: "none",
+                      width: "80%",
+                      borderRadius: "6px",
+                    }}
+                    // value={gameName}
+                    // name="gameName"
+                  />
+                )}
+              />
             </div>
           </div>
           <div className="userButtonGroup">
@@ -379,145 +458,150 @@ export default function PropfileInformation({
               </div>
             </FormControl>
           </div>
-          <div>
-            <label
-              for="Learning"
-              style={{
-                fontSize: "16px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              Learning Rhythm
-            </label>
-          </div>
-          <div className="userProfileSelectInput2">
-            <br />
-            <select
-              id="Select"
-              name="Select"
-              onChange={ChangeLearningRhythm}
-              className="selectInput-userProfile2"
-              style={{
-                fontSize: "15px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              <option
-                value="10h To 20h Per Week"
-                className="selectInput-option"
-              >
-                {learningRethem === "10h To 20h Per Week"
-                  ? learningRethem
-                  : "10h To 20h Per Week"}
-              </option>
-              <option value="20h To 30h Per Week">
-                {learningRethem === "20h To 30h Per Week"
-                  ? learningRethem
-                  : "20h To 30h Per Week"}
-              </option>
-              <option value="30h To 40h Per Week">
-                {learningRethem === "30h To 40h Per Week"
-                  ? learningRethem
-                  : "30h To 40h Per Week"}
-              </option>
-              <option value="40h To 50h Per Week">
-                {learningRethem === "40h To 50h Per Week"
-                  ? learningRethem
-                  : "40h To 50h Per Week"}
-              </option>
-              <option value="50h To 60h Per Week">
-                {learningRethem === "50h To 60h Per Week"
-                  ? learningRethem
-                  : "50h To 60h Per Week"}
-              </option>
-              <option value="60h To 70h Per Week">
-                {learningRethem === "60h To 70h Per Week"
-                  ? learningRethem
-                  : "60h To 70h Per Week"}
-              </option>
-            </select>
-          </div>
-          <div className="userProfileSelectInput">
-            <label
-              for="Learning"
-              style={{
-                fontSize: "16px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              Current Gameplay Level
-            </label>
-            <br />
-            <select
-              id="Select"
-              name="Select"
-              onChange={changeCurrentLevelHandler}
-              className="selectInput-userProfile"
-              defaultValue={currentLevel}
-              style={{
-                fontSize: "15px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              <option value="Casual" className="selectInput-option">
-                Casual (5h - 7h Of Play Per Week)
-              </option>
 
-              {/* <option value="saab">Pro</option> */}
-              <option value="Confirmed">
-                Confirmed (8 Hours - 15 Hours Of Play Per Week)
-              </option>
-              <option value="Hardcore">
-                Hardcore (16 Hours - 28 Hours Of Play Per Week)
-              </option>
-              <option value="Esporter">
-                Esporter (More than 30 Hours Of Play Per Week)
-              </option>
-            </select>
-          </div>
-          <div className="userProfileSelectInput">
-            <label
-              for="Learning"
-              style={{
-                fontSize: "16px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              Target Gameplay Level
-            </label>
-            <br />
+          {(user?.role === "User" || learner) && (
+            <>
+              <div>
+                <label
+                  for="Learning"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  Learning Rhythm
+                </label>
+              </div>
+              <div className="userProfileSelectInput2">
+                <br />
+                <select
+                  id="Select"
+                  name="Select"
+                  onChange={ChangeLearningRhythm}
+                  className="selectInput-userProfile2"
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  <option
+                    value="10h To 20h Per Week"
+                    className="selectInput-option"
+                  >
+                    {learningRethem === "10h To 20h Per Week"
+                      ? learningRethem
+                      : "10h To 20h Per Week"}
+                  </option>
+                  <option value="20h To 30h Per Week">
+                    {learningRethem === "20h To 30h Per Week"
+                      ? learningRethem
+                      : "20h To 30h Per Week"}
+                  </option>
+                  <option value="30h To 40h Per Week">
+                    {learningRethem === "30h To 40h Per Week"
+                      ? learningRethem
+                      : "30h To 40h Per Week"}
+                  </option>
+                  <option value="40h To 50h Per Week">
+                    {learningRethem === "40h To 50h Per Week"
+                      ? learningRethem
+                      : "40h To 50h Per Week"}
+                  </option>
+                  <option value="50h To 60h Per Week">
+                    {learningRethem === "50h To 60h Per Week"
+                      ? learningRethem
+                      : "50h To 60h Per Week"}
+                  </option>
+                  <option value="60h To 70h Per Week">
+                    {learningRethem === "60h To 70h Per Week"
+                      ? learningRethem
+                      : "60h To 70h Per Week"}
+                  </option>
+                </select>
+              </div>
+              <div className="userProfileSelectInput">
+                <label
+                  for="Learning"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  Current Gameplay Level
+                </label>
+                <br />
+                <select
+                  id="Select"
+                  name="Select"
+                  onChange={changeCurrentLevelHandler}
+                  className="selectInput-userProfile"
+                  defaultValue={currentLevel}
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  <option value="Casual" className="selectInput-option">
+                    Casual (5h - 7h Of Play Per Week)
+                  </option>
 
-            <select
-              id="Select"
-              name="Select"
-              onChange={changeTargetLevelHandler}
-              className="selectInput-userProfile"
-              defaultValue={target_level}
-              style={{
-                fontSize: "15px",
-                fontWeight: "400",
-                fontFamily: "Mulish",
-              }}
-            >
-              <option value="Casual" className="selectInput-option">
-                Casual (5h - 7h Of Play Per Week)
-              </option>
-              <option value="Confirmed">
-                Confirmed (8 Hours - 15 Hours Of Play Per Week)
-              </option>
-              <option value="Hardcore">
-                Hardcore (16 Hours - 28 Hours Of Play Per Week)
-              </option>
-              <option value="Esporter">
-                Esporter (More than 30 Hours Of Play Per Week)
-              </option>
-            </select>
-          </div>
+                  {/* <option value="saab">Pro</option> */}
+                  <option value="Confirmed">
+                    Confirmed (8 Hours - 15 Hours Of Play Per Week)
+                  </option>
+                  <option value="Hardcore">
+                    Hardcore (16 Hours - 28 Hours Of Play Per Week)
+                  </option>
+                  <option value="Esporter">
+                    Esporter (More than 30 Hours Of Play Per Week)
+                  </option>
+                </select>
+              </div>
+              <div className="userProfileSelectInput">
+                <label
+                  for="Learning"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  Target Gameplay Level
+                </label>
+                <br />
+
+                <select
+                  id="Select"
+                  name="Select"
+                  onChange={changeTargetLevelHandler}
+                  className="selectInput-userProfile"
+                  defaultValue={target_level}
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: "400",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  <option value="Casual" className="selectInput-option">
+                    Casual (5h - 7h Of Play Per Week)
+                  </option>
+                  <option value="Confirmed">
+                    Confirmed (8 Hours - 15 Hours Of Play Per Week)
+                  </option>
+                  <option value="Hardcore">
+                    Hardcore (16 Hours - 28 Hours Of Play Per Week)
+                  </option>
+                  <option value="Esporter">
+                    Esporter (More than 30 Hours Of Play Per Week)
+                  </option>
+                </select>
+              </div>
+            </>
+          )}
           <button className="userProfileButton" onClick={submitProfile}>
             Continue
           </button>
